@@ -19,6 +19,7 @@ class Form extends Component
         $this->label=$label;
         $this->name=$name;
         $this->type=$type;
+
     }
 
     /**

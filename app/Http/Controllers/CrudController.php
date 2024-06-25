@@ -42,15 +42,18 @@ class CrudController extends Controller
         $registration->dob=$request['dob'];
         $registration->phone=$request['phone'];
         $registration->save();
-        return view('display');
+        return redirect('reg/show');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
         //
+        $registration = Registration::all();
+        $data = compact('registration');
+        return view('display')->with($data);
     }
 
     /**
@@ -59,6 +62,17 @@ class CrudController extends Controller
     public function edit(string $id)
     {
         //
+        $registration = Registration::find($id);
+        if(is_null($registration))
+        {
+            return redirect('reg/show');
+        }
+        else
+        {
+            $url = url('reg/').$id.'/edit';
+            $data = compact('url','registration');
+            return view('update')->with($data);
+        }
     }
 
     /**
@@ -67,6 +81,17 @@ class CrudController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $registration = Registration::find($id);
+        $registration->uname=$request['uname'];
+        $registration->email=$request['email'];
+        $registration->gender=$request['gender'];
+        $registration->address=$request['address'];
+        $registration->city=$request['city'];
+        $registration->state=$request['state'];
+        $registration->dob=$request['dob'];
+        $registration->phone=$request['phone'];
+        $registration->save();
+        return redirect('reg/show');
     }
 
     /**
@@ -75,5 +100,8 @@ class CrudController extends Controller
     public function destroy(string $id)
     {
         //
+        $registration = Registration::find($id);
+        $registration->delete();
+        return redirect('reg/show');
     }
 }
