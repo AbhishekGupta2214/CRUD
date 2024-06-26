@@ -104,4 +104,5 @@ class CrudController extends Controller
         $registration->delete();
         return redirect('reg/show');
     }
+   
 }
